@@ -1,0 +1,22 @@
+This project is a simple collection of converters, that are used in sequence to get the plotted route
+of a bus line.
+
+all the data that is required by the all_routes_data directory(and is too heavy to push to git)
+(from israel-public-transportation zip file - which is taken from https://gtfs.mot.gov.il/gtfsfiles/):
+    - trips.csv
+    - shapes.csv
+
+desired_lines_info:
+The ClusterToLine.csv file was taken from https://gtfs.mot.gov.il/gtfsfiles/
+this file lists all lines pertaining to a cluster (a zone in the country(Israel)), for all such clusters.
+
+the extractor(extractor.py) is set to extract all routes that are local to Modi'in,
+and thus produces the 'filtered_routes.csv'(which is already produced)
+
+line_to_trip.py:
+the line_to_trip.py module is meant to convert the OfficeLineID number to the trip_id number,
+from which the trip stops and shape can be filtered (from the files in all_routes_data)
+for now a prefix is missing from the OfficeLineID (which was completed manually for the sake of example).
+
+notes:
+the route plotted belongs to line number 89.
