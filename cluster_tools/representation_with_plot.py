@@ -12,13 +12,17 @@ class Plotter:
         self.axes.set_ylabel('end_window')
         self.axes.set_zlabel('milage')
 
-    def plot_points(self, points):
+    def plot_points(self, points, color=None):
 
         x = [v[0] for v in points]
         y = [v[1] for v in points]
         z = [v[2] for v in points]
         # Plot the points
-        self.axes.scatter(x, y, z)
+
+        if color:
+            self.axes.scatter(x, y, z, c=color)
+        else:
+            self.axes.scatter(x, y, z)
 
         # Show the plot
         plt.show()

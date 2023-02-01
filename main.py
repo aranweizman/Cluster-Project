@@ -15,12 +15,12 @@ def main():
                 points[(vehicle_number, i)] = Behavior(data[vehicle_number][i], vehicle_number)
 
     # # # 3 lines of code that plot the points(without clusters)
-    # vecs = [point.get_vector() for point in points.values()]
-    # p = Plotter()
-    # p.plot_points(vecs)
+    vecs = [point.get_vector() for point in points.values()]
+    p = Plotter()
+    p.plot_points(vecs)
 
     tools = ClusterTool(points)
-    tools.set_cluster_centroids()
+    tools.set_cluster_centroids(p)
 
 
 if __name__ == '__main__':

@@ -40,7 +40,7 @@ class ClusterCentroid:
             new_position = self._point_sum_total / self._point_count
 
             # (return value) -> did the position changed
-            if True in new_position != self._centroid_point:
+            if not np.array_equal(new_position, self._centroid_point):
                 self._centroid_point = new_position
 
                 self._variance_changes = True

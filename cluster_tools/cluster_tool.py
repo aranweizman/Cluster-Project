@@ -16,13 +16,14 @@ class ClusterTool:
         self._points = point_dictionary
         self._centroids = {}
         self._outliers = {}
+        self._centroid_color = 'orange'
 
     """
     This method picks points to be the cluster centers of mass.
     it uses a min-max algorithm that promises maximum variance.
     """
     # todo: get max number of centroids(optional)
-    def set_cluster_centroids(self) -> None:
+    def set_cluster_centroids(self, plotter) -> None:
 
         # append cluster at first point
         first_key = next(iter(self._points))
@@ -43,7 +44,8 @@ class ClusterTool:
         while True:
 
             # append min-max point as a function of previous centroids
-            new_centroid = self.append_centroid()
+            new_centroid_point = self.append_centroid()[0]
+            plotter.plot_points([new_centroid_point.get_vector()], self._centroid_color)
 
             # check plot saturation (pre-implementation: loop is supervised by programmer)
             if input() == 'q':
@@ -59,13 +61,13 @@ class ClusterTool:
         for point in self._points.values():
 
             # recalculate nearest centroid
-            for centroid in self._centroids:
+            for centroid in self._centroids.values():
                 if centroid.distance_to_point(point) < point.get_centroid().distance_to_point(point):
                     point.set_centroid(centroid)
 
         # update centroid locations
         centroids_moved = False
-        for centroid in self._centroids:
+        for centroid in self._centroids.values():
             if centroid.update_position():
                 centroids_moved = True
 
@@ -96,7 +98,7 @@ class ClusterTool:
             min_distance_to_centroid = sys.maxsize
 
             # find nearest centroid
-            for centroid in self._centroids:
+            for centroid in self._centroids.values():
                 new_distance = centroid.distance_to_point(point)
 
                 if new_distance < min_distance_to_centroid:  # update min
@@ -107,5 +109,5 @@ class ClusterTool:
                 furthest_point = point, min_distance_to_centroid
 
         # append centroid to list
-        self._centroids += [ClusterCentroid(furthest_point[0], {})]
+        self._centroids[furthest_point[0]] = ClusterCentroid(furthest_point[0], {})
         return furthest_point
